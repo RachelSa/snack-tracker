@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { changeSnack } from '../actions'
+import { Button } from 'semantic-ui-react'
 
 export class Navbar extends React.Component {
    handleOnClick = () => {
@@ -11,9 +12,9 @@ export class Navbar extends React.Component {
   render(){
     return (
       <div>
-        <button onClick={this.handleOnClick}>
+        <Button onClick={this.handleOnClick}>
           Click Me
-        </button>
+        </Button>
         {this.props.currentSnack}
       </div>
     )

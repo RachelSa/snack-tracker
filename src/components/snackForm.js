@@ -1,38 +1,53 @@
 import React from 'react'
+import { Input, Select, Rating, Form, Button } from 'semantic-ui-react'
+
 
 class SnackForm extends React.Component {
+  constructor (){
+    super()
+    this.options = [
+      {value: 'salty', text: 'salty'},
+      {value: 'sweet', text: 'sweet'},
+      {value: 'other', text: 'other'}
+    ]
+  }
 
   render(){
     return (
-      <form>
+      <Form>
+      <Form.Field>
         <label>Name</label>
         <input
-          type='text'
           placeholder='cheetos'>
         </input>
-        <select>
-          <option value="salty">salty</option>
-          <option value="sweet">sweet</option>
-          <option value="other">other</option>
-        </select>
+         </Form.Field>
+         <Form.Field>
+        <Select
+        placeholder='Select Snack Type'
+        options={this.options} />
+        </Form.Field>
+        <Form.Field>
         <label>Review</label>
-        <input
+        <Input
           type='text'
           placeholder='so yummy'>
-        </input>
-        <label>Rating:</label>
-        <input
-          type='number'
-          min='1'
-          max='5'
-          placeholder='5'>
-        </input>
-        <input
-          type="button"
-          value="submit"
-          ></input>
+        </Input>
+        </Form.Field>
+        <Form.Field>
+        <label>rating:</label>
+        <Rating
+          icon='heart'
+          defaultRating={1}
+          maxRating={3}
+          />
+          </Form.Field>
+          <Form.Field>
+        <Button
+          type="submit"
+          >Submit</Button>
+          </Form.Field>
 
-    </form>
+    </Form>
     )
   }
 }
