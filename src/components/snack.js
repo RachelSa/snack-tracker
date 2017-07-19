@@ -1,6 +1,7 @@
 import React from 'react'
 import Snacks from '../snacks'
 import SnackRatingForm from './snackRatingForm'
+import SnackReviewForm from './snackReviewForm'
 import { Link, Route } from 'react-router-dom'
 import { Segment, Divider, Header } from 'semantic-ui-react'
 
@@ -9,7 +10,7 @@ const Snack = (props) => {
   const snack = Snacks.find(snack => snack.name === snackName)
 
   const rating = snack.rating ? <div><Header size='small'>Rating</Header> {snack.rating} </div> : <div><Header size='small'>Rating</Header><SnackRatingForm/></div>
-  const review = snack.review ? <div><Header size='small'>Review</Header> {snack.review}  </div> : <div><Header size='small'>Review</Header>+ add review</div>
+  const review = snack.review ? <div><Header size='small'>Review</Header> {snack.review}  </div> : <div><Header size='small'>Review</Header><SnackReviewForm/></div>
 
   return (
     <Segment>
@@ -24,7 +25,7 @@ const Snack = (props) => {
        <Divider />
        {review}
        <Route
-         path="/snacks/:snackName/edit/review" component={ () => 'hi'}
+         path="/snacks/:snackName/edit/review" component={SnackReviewForm}
        />
     </Segment>
   )
