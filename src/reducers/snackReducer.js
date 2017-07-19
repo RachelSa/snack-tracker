@@ -1,10 +1,13 @@
+import snacks from '../snacks'
+
 export default function snackChanger(state={
-  currentSnack: 'none'
+  currentSnack: 'none', snacks: snacks
 }, action) {
   switch (action.type) {
     case 'CHANGE_SNACK':
-      console.log('currentSnack updating...')
       return {currentSnack: "cheetos"}
+    case 'ADD_SNACK':
+      return {snacks: [...state.snacks, action.payload]}
   default:
         return state
   }
