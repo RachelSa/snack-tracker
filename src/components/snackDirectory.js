@@ -3,13 +3,19 @@ import Snack from './snack'
 import { Link, Route, Switch } from 'react-router-dom'
 import SnackForm from './snackForm'
 import { Grid } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 
+class SnackDirectory extends React.Component {
 
-const SnackDirectory = ({snacks}) => {
+  handleClick = () => {
 
-  const preparedSnacks = snacks.map(snack =>
-    <div key={snack.id}>
+  }
+
+  preparedSnacks = () =>
+    this.props.snacks.map(snack =>
+    <div key={snack.name}>
       <Link
+        onClick={this.handleClick}
         to={`/snacks/${snack.name}`}>
         <p> {snack.name} </p>
       </Link>
@@ -17,31 +23,39 @@ const SnackDirectory = ({snacks}) => {
     </div>
   )
 
-  return (
-      <Grid columns={2}>
-        <Grid.Row>
-          <Grid.Column>
-            {preparedSnacks}
-            <Link
-              to={`/snacks/new`}>
-              <p>+ new snack</p>
-            </Link>
-          </Grid.Column>
-          <Grid.Column>
-          <div>
-          <Switch>
-            <Route
-              path="/snacks/new" component={SnackForm}
-            />
-            <Route
-              path="/snacks/:snackName" component={Snack}
-            />
-            </Switch>
-            </div>
+  render(){
+    return (
+        <Grid columns={2}>
+          <Grid.Row>
+            <Grid.Column>
+              {this.preparedSnacks()}
+              <Link
+                to={`/snacks/new`}>
+                <p>+ new snack</p>
+              </Link>
             </Grid.Column>
-          </Grid.Row>
-      </Grid>
-    )
-
+            <Grid.Column>
+            <div>
+            <Switch>
+              <Route
+                path="/snacks/new" component={SnackForm}
+              />
+              <Route
+                path="/snacks/:snackName" component={Snack}
+              />
+              </Switch>
+              </div>
+              </Grid.Column>
+            </Grid.Row>
+        </Grid>
+      )
+  }
 }
-export default SnackDirectory
+
+const mapStateToProps = (state) => {
+  return {
+    snacks: state.snacks
+  }
+}
+
+export default connect(mapStateToProps, null)(SnackDirectory)

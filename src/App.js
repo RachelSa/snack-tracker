@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Navbar from './components/navbar'
 import SnackDirectory from './components/snackDirectory'
-import snacks from './snacks'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { Container } from 'semantic-ui-react'
 
@@ -16,7 +15,7 @@ class App extends Component {
           <Container>
           <Route
             path='/snacks'
-            render={() => <SnackDirectory snacks={snacks}/>}
+            component={SnackDirectory}
           />
         </Container>
         </div>
@@ -25,4 +24,7 @@ class App extends Component {
   }
 }
 
-export default App;
+
+
+
+export default App

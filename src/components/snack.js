@@ -1,15 +1,15 @@
 import React from 'react'
-import Snacks from '../snacks'
 import SnackRatingForm from './snackRatingForm'
+import SnackReviewForm from './snackReviewForm'
 import { Link, Route } from 'react-router-dom'
 import { Segment, Divider, Header } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 
 const Snack = (props) => {
   let snackName = props.match.params.snackName
-  const snack = Snacks.find(snack => snack.name === snackName)
-
+  const snack = props.snacks.find(snack => snack.name === snackName)
   const rating = snack.rating ? <div><Header size='small'>Rating</Header> {snack.rating} </div> : <div><Header size='small'>Rating</Header><SnackRatingForm/></div>
-  const review = snack.review ? <div><Header size='small'>Review</Header> {snack.review}  </div> : <div><Header size='small'>Review</Header>+ add review</div>
+  const review = snack.review ? <div><Header size='small'>Review</Header> {snack.review}  </div> : <div><Header size='small'>Review</Header><SnackReviewForm/></div>
 
   return (
     <Segment>
@@ -29,4 +29,11 @@ const Snack = (props) => {
     </Segment>
   )
 }
-export default Snack
+
+const mapStateToProps = (state) => {
+  return {
+    snacks: state.snacks
+  }
+}
+
+export default connect(mapStateToProps, null)(Snack)
