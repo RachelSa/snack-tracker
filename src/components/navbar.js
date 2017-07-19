@@ -15,17 +15,17 @@ export class Navbar extends React.Component {
         <Button onClick={this.handleOnClick}>
           Click Me
         </Button>
-        {this.props.currentSnack}
+
       </div>
     )
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    currentSnack: state.currentSnack
-  }
-}
+// const mapStateToProps = (state) => {
+//   return {
+//     currentSnack: state.currentSnack
+//   }
+// }
 
 
 const mapDispatchToProps = (dispatch) => {
@@ -34,4 +34,4 @@ const mapDispatchToProps = (dispatch) => {
   }, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar)
+export default connect(null, mapDispatchToProps)(Navbar)

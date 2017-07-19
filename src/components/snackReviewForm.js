@@ -3,6 +3,8 @@ import { Input, Form, Button } from 'semantic-ui-react'
 
 
 class SnackReviewForm extends React.Component {
+
+
   render(){
     return (
       <Form>
