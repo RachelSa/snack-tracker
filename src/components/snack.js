@@ -9,6 +9,12 @@ import { connect } from 'react-redux'
 // import { currentSnack } from '../actions'
 
 class Snack extends React.Component {
+  constructor(){
+    super()
+    this.state = {
+      selected: 'view'
+    }
+  }
 
   componentWillMount(){
     let snackName = this.props.match.params.snackName
@@ -21,6 +27,17 @@ class Snack extends React.Component {
     return this.snack = nextProps.snacks.find(snack => snack.name === snackName)
   }
 
+  renderEdit = () => {
+    console.log("hey from edit")
+  }
+
+  renderDelete = () => {
+
+  }
+
+  renderView = () => {
+
+  }
 
 render(){
   if (this.snack === null ){
@@ -33,7 +50,23 @@ render(){
     return (
       <Segment>
         <Header as='h2'>{this.snack.name}</Header>
-        <Button size='mini'>edit</Button> <Button size='mini'>delete</Button>
+
+        <Button
+        size='mini'
+        onClick={this.renderEdit}>
+        edit
+        </Button>
+        <Button
+        size='mini'
+        onClick={this.renderDelete}>
+        delete
+        </Button>
+        <Button
+        size='mini'
+        onClick={this.renderView}>
+        view
+        </Button>
+
          <Divider />
         <div><Header size='small'>Flavor Profile</Header> {this.snack.type}</div>
          <Divider />
