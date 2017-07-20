@@ -7,21 +7,16 @@ import { connect } from 'react-redux'
 
 class SnackDirectory extends React.Component {
 
-  handleClick = () => {
-
-  }
-
-  preparedSnacks = () =>
-    this.props.snacks.map(snack =>
+  preparedSnacks = () => {
+    return this.props.snacks.map(snack =>
     <div key={snack.name}>
       <Link
-        onClick={this.handleClick}
         to={`/snacks/${snack.name}`}>
         <p> {snack.name} </p>
       </Link>
-
     </div>
   )
+}
 
   render(){
     return (
@@ -54,7 +49,7 @@ class SnackDirectory extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    snacks: state.snacks
+    snacks: state.snacks || []
   }
 }
 
