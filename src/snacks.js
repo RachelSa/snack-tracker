@@ -10,8 +10,8 @@ const snacks = [
     id: 2,
     name: "Pull n' Peel Twizzlers",
     type: "sweet",
-    review: '',
-    rating: ''
+    review: 'good for road trips',
+    rating: '2'
   },
   {
     id: 3,

@@ -7,54 +7,54 @@ import { connect } from 'react-redux'
 
 class SnackDirectory extends React.Component {
 
-  handleClick = () => {
-
+  preparedSnacks = () => {
+    return this.props.snacks.map(snack =>
+      <div key={snack.name}>
+        <Link
+          to={`/snacks/${snack.name}`}>
+          <p> {snack.name} </p>
+        </Link>
+      </div>
+    )
   }
 
-  preparedSnacks = () =>
-    this.props.snacks.map(snack =>
-    <div key={snack.name}>
-      <Link
-        onClick={this.handleClick}
-        to={`/snacks/${snack.name}`}>
-        <p> {snack.name} </p>
-      </Link>
-
-    </div>
-  )
+  // shouldComponentUpdate(nextProps){
+  //   console.log(this.props.snacks === nextProps.snacks)
+  //   return this.props.snacks !== nextProps.snacks
+  // }
 
   render(){
     return (
-        <Grid columns={2}>
-          <Grid.Row>
-            <Grid.Column>
-              {this.preparedSnacks()}
-              <Link
-                to={`/snacks/new`}>
-                <p>+ new snack</p>
-              </Link>
-            </Grid.Column>
-            <Grid.Column>
+      <Grid columns={2}>
+        <Grid.Row>
+          <Grid.Column>
+            {this.preparedSnacks()}
+            <Link
+              to={`/snacks/new`}>
+              <p>+ new snack</p>
+            </Link>
+          </Grid.Column>
+          <Grid.Column>
             <div>
-            <Switch>
-              <Route
-                path="/snacks/new" component={SnackForm}
-              />
-              <Route
-                path="/snacks/:snackName" component={Snack}
-              />
+              <Switch>
+                <Route
+                  path="/snacks/new" component={SnackForm}
+                />
+                <Route
+                  path="/snacks/:snackName" component={Snack}
+                />
               </Switch>
-              </div>
-              </Grid.Column>
-            </Grid.Row>
-        </Grid>
+            </div>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
       )
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    snacks: state.snacks
+    snacks: state.snackReducer.snacks || []
   }
 }
 
