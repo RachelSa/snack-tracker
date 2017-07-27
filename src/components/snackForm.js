@@ -15,9 +15,33 @@ class SnackForm extends React.Component {
     ]
     this.state = {
       name: '',
-      type: '',
-      review: '',
-      rating: ''
+      type:'',
+      review:'',
+      rating:''
+    }
+  }
+
+  componentWillMount(){
+    if (this.props.snack){
+      let snack = this.props.snack
+      this.setState({
+        name: snack.name,
+        type: snack.type,
+        review: snack.review,
+        rating: snack.rating
+      })
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.snack && nextProps.snack !== this.state){
+      let snack = nextProps.snack
+      this.setState({
+        name: snack.name,
+        type: snack.type,
+        review: snack.review,
+        rating: snack.rating
+      })
     }
   }
 
@@ -47,6 +71,7 @@ class SnackForm extends React.Component {
           <label>Name</label>
           <Input
             placeholder='cheetos'
+            value={this.state.name}
             onChange={this.handleChange}
             name='name'/>
         </Form.Field>
@@ -65,6 +90,7 @@ class SnackForm extends React.Component {
           onChange={this.handleChange}
           name='review'
           type='text'
+          value={this.state.review}
           placeholder='so yummy'>
           </Input>
         </Form.Field>
@@ -72,6 +98,7 @@ class SnackForm extends React.Component {
           <label>rating:</label>
           <Rating
             onRate={this.handleRate}
+            value={this.state.rating}
             icon='heart'
             defaultRating={1}
             maxRating={3}
@@ -87,7 +114,7 @@ class SnackForm extends React.Component {
     )
   }
 }
-
+//rating edit is broken, does not display accurate rating
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(

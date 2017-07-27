@@ -5,9 +5,10 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import snackChanger from './reducers/snackReducer'
+import rootReducer from './reducers'
 
-const store = createStore(snackChanger)
+const store = createStore(rootReducer)
+console.log(store.getState())
 
 ReactDOM.render(
   <Provider store={store} >
