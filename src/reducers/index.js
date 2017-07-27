@@ -1,8 +1,8 @@
 import snackReducer from './snackReducer'
-import userReducer from './userReducer'
+import brandReducer from './brandReducer'
 import { combineReducers } from 'redux'
 
 export default combineReducers({
   snackReducer,
-  userReducer
+  brandReducer
 })

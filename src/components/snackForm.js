@@ -1,7 +1,6 @@
 import React from 'react'
 import { Input, Select, Rating, Form, Button } from 'semantic-ui-react'
 import { addSnack } from '../actions'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 
@@ -116,10 +115,4 @@ class SnackForm extends React.Component {
 }
 //rating edit is broken, does not display accurate rating
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(
-    {addSnack},
-    dispatch)
-}
-
-export default connect(null, mapDispatchToProps)(SnackForm)
+export default connect(null, {addSnack})(SnackForm)
