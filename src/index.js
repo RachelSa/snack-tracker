@@ -7,11 +7,11 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import rootReducer from './reducers'
 
-const store = createStore(rootReducer)
+const store = createStore(rootReducer, {}, window.devToolsExtension ? window.devToolsExtension() : undefined )
 console.log('this is the store!', store.getState())
 
 ReactDOM.render(
   <Provider store={store} >
-  <App store={store} />
+  <App />
   </Provider>, document.getElementById('root'));
 registerServiceWorker();

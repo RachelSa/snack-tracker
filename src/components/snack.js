@@ -1,12 +1,8 @@
 import React from 'react'
 import SnackForm from './snackForm'
-import { Button } from 'semantic-ui-react'
 import SelectViewButtons from './detailView/selectViewButtons'
-//import { Route } from 'react-router-dom'
-import { Segment, Divider, Header } from 'semantic-ui-react'
+import { Segment, Divider, Header, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-// import { bindActionCreators } from 'redux'
-// import { currentSnack } from '../actions'
 
 class Snack extends React.Component {
   constructor(props){
@@ -20,7 +16,10 @@ class Snack extends React.Component {
 
   componentWillUpdate(nextProps) {
     let snackName = nextProps.match.params.snackName
-    return this.snack = nextProps.snacks.find(snack => snack.name === snackName)
+    if (snackName !== this.snack.name || nextProps.snacks !== this.props.snacks){
+      this.setState({selected: 'view'})
+      return this.snack = nextProps.snacks.find(snack => snack.name === snackName)
+    }
   }
 
   handleChange = (event) => {
@@ -34,9 +33,8 @@ class Snack extends React.Component {
   }
 
 
-
-
 render(){
+
   if (this.snack === null ){
     return <div></div>
   }
@@ -97,12 +95,6 @@ const mapStateToProps = (state) => {
     snacks: state.snackReducer.snacks
   }
 }
-
-// const mapDispatchToProps = (dispatch) => {
-//   return bindActionCreators({
-//     currentSnack,
-//   }, dispatch)
-// }
 
 
 export default connect(mapStateToProps, null)(Snack)
