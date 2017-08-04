@@ -3,26 +3,36 @@ import snacks from '../snacks'
 export default function snackChanger(state={
   currentSnack: '', snacks: snacks
 }, action) {
-  console.log('hi from snack reducer')
   switch (action.type) {
     case 'CHANGE_SNACK':
       return {currentSnack: "cheetos"}
     case 'ADD_SNACK':
-      console.log("this is 'add snack' from my snack reducer", state.snacks)
       return {snacks: [...state.snacks, action.payload]}
     case 'EDIT_SNACK':
-      let updatedSnacks = state.snacks.map(snack => {
-        if (snack.name === action.payload.snack.name){
-          action.payload.snack.id = snack.id
-          return action.payload.snack
-
-        }
-        else { return snack }
-      })
+      let updatedSnacks = updateSnacks(state.snacks, action.payload.snack)
         return { snacks: updatedSnacks }
     case 'CURRENT_SNACK':
         return {currentSnack: action.payload}
+    case 'DELETE_SNACK':
+      let remainingSnacks = filterSnacks(state.snacks, action.payload)
+        return {snacks: remainingSnacks}
   default:
         return state
   }
+}
+
+function filterSnacks(snacks, snackToDelete){
+  return snacks.filter(snack => {
+    return snack.name !== snackToDelete
+  })
+}
+
+function updateSnacks(snacks, updatedSnack){
+  return snacks.map(snack => {
+    if (snack.name === updatedSnack.name){
+      updatedSnack.id = snack.id
+      return updatedSnack
+    }
+    else { return snack }
+  })
 }

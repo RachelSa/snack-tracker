@@ -28,3 +28,10 @@ export function editSnack(snack){
     payload: snack
   }
 }
+
+export function deleteSnack(snack){
+  return {
+    type: "DELETE_SNACK",
+    payload: snack
+  }
+}

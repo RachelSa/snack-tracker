@@ -37,18 +37,6 @@ class SnackForm extends React.Component {
     }
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.snack && nextProps.snack !== this.state){
-  //     let snack = nextProps.snack
-  //     this.setState({
-  //       name: snack.name,
-  //       type: snack.type,
-  //       review: snack.review,
-  //       rating: snack.rating
-  //     })
-  //   }
-  // }
-
   handleChange = (event, result) => {
     let key = result.name,
         value = result.value
@@ -57,16 +45,21 @@ class SnackForm extends React.Component {
         ...this.state.snack,
         [key]: value
       }
-
     })
-
   }
 
   handleRate = (e, { rating, maxRating }) => {
-    this.setState({ rating:rating })
+    this.setState({
+      snack: {
+        ...this.state.snack,
+        rating: rating
+      }
+    }
+  )
   }
 
   handleSubmit = (event) => {
+
     event.preventDefault()
     if (this.state.edit){
       this.props.editSnack({snack: this.state.snack})
