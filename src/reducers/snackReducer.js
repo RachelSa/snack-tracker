@@ -1,7 +1,7 @@
 import snacks from '../snacks'
 
 export default function snackChanger(state={
-  currentSnack: '', snacks: snacks
+  currentSnack: 'hi', snacks: snacks
 }, action) {
   switch (action.type) {
     case 'CHANGE_SNACK':
@@ -11,8 +11,8 @@ export default function snackChanger(state={
     case 'EDIT_SNACK':
       let updatedSnacks = updateSnacks(state.snacks, action.payload.snack)
         return { snacks: updatedSnacks }
-    case 'CURRENT_SNACK':
-        return {currentSnack: action.payload}
+    case 'SET_SNACK':
+          return {currentSnack: action.payload}
     case 'DELETE_SNACK':
       let remainingSnacks = filterSnacks(state.snacks, action.payload)
         return {snacks: remainingSnacks}
