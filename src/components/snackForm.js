@@ -1,7 +1,8 @@
 import React from 'react'
 import { Input, Select, Rating, Form, Button } from 'semantic-ui-react'
-import { addSnack } from '../actions'
+import { addSnack, editSnack } from '../actions'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 
 
 class SnackForm extends React.Component {
@@ -13,10 +14,12 @@ class SnackForm extends React.Component {
       {value: 'other', text: 'other'}
     ]
     this.state = {
+      snack:{
       name: '',
       type:'',
       review:'',
-      rating:''
+      rating:''},
+      edit: false
     }
   }
 
@@ -24,22 +27,12 @@ class SnackForm extends React.Component {
     if (this.props.snack){
       let snack = this.props.snack
       this.setState({
+        snack: {
         name: snack.name,
         type: snack.type,
         review: snack.review,
-        rating: snack.rating
-      })
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.snack && nextProps.snack !== this.state){
-      let snack = nextProps.snack
-      this.setState({
-        name: snack.name,
-        type: snack.type,
-        review: snack.review,
-        rating: snack.rating
+        rating: snack.rating },
+        edit: true
       })
     }
   }
@@ -48,19 +41,32 @@ class SnackForm extends React.Component {
     let key = result.name,
         value = result.value
     this.setState({
-      [key]: value
+      snack: {
+        ...this.state.snack,
+        [key]: value
+      }
     })
-
   }
 
   handleRate = (e, { rating, maxRating }) => {
-    this.setState({ rating:rating })
+    this.setState({
+      snack: {
+        ...this.state.snack,
+        rating: rating
+      }
+    }
+  )
   }
 
   handleSubmit = (event) => {
-    event.preventDefault()
-    this.props.addSnack({snack: this.state})
 
+    event.preventDefault()
+    if (this.state.edit){
+      this.props.editSnack({snack: this.state.snack})
+    }
+    else {
+      this.props.addSnack({snack: this.state.snack})
+    }
   }
 
   render(){
@@ -70,7 +76,7 @@ class SnackForm extends React.Component {
           <label>Name</label>
           <Input
             placeholder='cheetos'
-            value={this.state.name}
+            value={this.state.snack.name}
             onChange={this.handleChange}
             name='name'/>
         </Form.Field>
@@ -79,7 +85,7 @@ class SnackForm extends React.Component {
           <Select
           onChange={this.handleChange}
           name='type'
-          value={this.state.type}
+          value={this.state.snack.type}
           placeholder='Select Snack Type'
           options={this.options} />
         </Form.Field>
@@ -89,7 +95,7 @@ class SnackForm extends React.Component {
           onChange={this.handleChange}
           name='review'
           type='text'
-          value={this.state.review}
+          value={this.state.snack.review}
           placeholder='so yummy'>
           </Input>
         </Form.Field>
@@ -97,9 +103,9 @@ class SnackForm extends React.Component {
           <label>rating:</label>
           <Rating
             onRate={this.handleRate}
-            value={this.state.rating}
+            value={this.state.snack.rating}
             icon='heart'
-            defaultRating={1}
+            defaultRating={this.state.snack.rating}
             maxRating={3}
             />
           </Form.Field>
@@ -115,4 +121,4 @@ class SnackForm extends React.Component {
 }
 //rating edit is broken, does not display accurate rating
 
-export default connect(null, {addSnack})(SnackForm)
+export default withRouter(connect(null, {addSnack, editSnack})(SnackForm))

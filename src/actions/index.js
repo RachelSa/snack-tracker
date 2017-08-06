@@ -1,4 +1,4 @@
-//import snacks from '../snacks'
+import snacks from '../snacks'
 
 export function changeSnack(){
   return {
@@ -7,15 +7,31 @@ export function changeSnack(){
 }
 
 export function addSnack(snack){
+  let preparedSnack = snack["snack"]
+  preparedSnack["id"] = snacks.length + 1
   return {
     type: "ADD_SNACK",
-    payload: snack["snack"]
+    payload: preparedSnack
   }
 }
 
 export function currentSnack(snack){
   return {
     type: "CURRENT_SNACK",
+    payload: snack
+  }
+}
+
+export function editSnack(snack){
+  return {
+    type: "EDIT_SNACK",
+    payload: snack
+  }
+}
+
+export function deleteSnack(snack){
+  return {
+    type: "DELETE_SNACK",
     payload: snack
   }
 }

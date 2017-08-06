@@ -1,12 +1,12 @@
 import React from 'react'
 import SnackForm from './snackForm'
-import { Button } from 'semantic-ui-react'
+import SnackDelete from './snackDelete'
+import SnackView from './snackView'
 import SelectViewButtons from './detailView/selectViewButtons'
-//import { Route } from 'react-router-dom'
-import { Segment, Divider, Header } from 'semantic-ui-react'
+import { Segment, Divider, Header, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
-// import { bindActionCreators } from 'redux'
-// import { currentSnack } from '../actions'
+import { deleteSnack } from '../actions'
+import { withRouter } from 'react-router'
 
 class Snack extends React.Component {
   constructor(props){
@@ -20,7 +20,10 @@ class Snack extends React.Component {
 
   componentWillUpdate(nextProps) {
     let snackName = nextProps.match.params.snackName
-    return this.snack = nextProps.snacks.find(snack => snack.name === snackName)
+    if (snackName !== this.snack.name || nextProps.snacks !== this.props.snacks){
+      this.setState({selected: 'view'})
+      return this.snack = nextProps.snacks.find(snack => snack.name === snackName)
+    }
   }
 
   handleChange = (event) => {
@@ -30,10 +33,9 @@ class Snack extends React.Component {
   }
 
   handleDelete = (event) => {
-    console.log("deleting...")
+    this.props.deleteSnack(event.target.value)
+    this.props.history.push('/snacks')
   }
-
-
 
 
 render(){
@@ -41,38 +43,13 @@ render(){
     return <div></div>
   }
   else if (this.state.selected === 'view'){
-    const rating = this.snack.rating ? <div><Header size='small'>Rating</Header> {this.snack.rating} / 3 </div> : <div><Header size='small'>Rating</Header>no rating yet 😐</div>
-    const review = this.snack.review ? <div><Header size='small'>Review</Header> {this.snack.review}  </div> : <div><Header size='small'>Review</Header>no review yet 😐</div>
-
     return (
-      <Segment>
-        <Header as='h2'>{this.snack.name}</Header>
-
-        <SelectViewButtons handleChange={this.handleChange}/>
-
-         <Divider />
-        <div><Header size='small'>Flavor Profile</Header> {this.snack.type}</div>
-         <Divider />
-          {rating}
-         <Divider />
-          {review}
-
-      </Segment>
+      <SnackView snack={this.snack} handleChange={this.handleChange}/>
     )
   }
   else if (this.state.selected === 'delete'){
     return (
-      <Segment>
-        <Header as='h2'>{this.snack.name}</Header>
-        < SelectViewButtons handleChange={this.handleChange}/>
-        <Divider />
-
-        <p>Are you sure you want to delete this {this.snack.name} entry?</p>
-        <Button
-        onClick={this.handleDelete}>
-        Yes, get rid of it forever
-        </Button>
-      </Segment>
+      <SnackDelete snack={this.snack} handleChange={this.handleChange} handleDelete={this.handleDelete} />
     )
   }
 
@@ -81,9 +58,7 @@ render(){
       <Segment>
         <Header as='h2'>{this.snack.name}</Header>
         <SelectViewButtons handleChange={this.handleChange}/>
-
          <Divider />
-
         <SnackForm snack={this.snack}/>
       </Segment>
       )
@@ -98,11 +73,5 @@ const mapStateToProps = (state) => {
   }
 }
 
-// const mapDispatchToProps = (dispatch) => {
-//   return bindActionCreators({
-//     currentSnack,
-//   }, dispatch)
-// }
 
-
-export default connect(mapStateToProps, null)(Snack)
+export default withRouter(connect(mapStateToProps, { deleteSnack })(Snack))

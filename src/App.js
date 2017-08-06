@@ -8,6 +8,7 @@ import { Container } from 'semantic-ui-react'
 class App extends Component {
 
   render() {
+    console.log('hi from app')
     return (
       <Router>
         <div className="App">

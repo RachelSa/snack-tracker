@@ -18,10 +18,6 @@ class SnackDirectory extends React.Component {
     )
   }
 
-  // shouldComponentUpdate(nextProps){
-  //   console.log(this.props.snacks === nextProps.snacks)
-  //   return this.props.snacks !== nextProps.snacks
-  // }
 
   render(){
     return (
@@ -54,7 +50,8 @@ class SnackDirectory extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    snacks: state.snackReducer.snacks || []
+    snacks: state.snackReducer.snacks || [],
+    brand: state.brandReducer
   }
 }
 
