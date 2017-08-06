@@ -35,3 +35,10 @@ export function deleteSnack(snack){
     payload: snack
   }
 }
+
+export function setSnack(snack){
+  return {
+    type: "SET_SNACK",
+    payload: snack
+  }
+}

@@ -4,18 +4,16 @@ export default function snackChanger(state={
   currentSnack: '', snacks: snacks
 }, action) {
   switch (action.type) {
-    case 'CHANGE_SNACK':
-      return {currentSnack: "cheetos"}
     case 'ADD_SNACK':
-      return {snacks: [...state.snacks, action.payload]}
+      return {snacks: [...state.snacks, action.payload], currentSnack: action.payload }
     case 'EDIT_SNACK':
       let updatedSnacks = updateSnacks(state.snacks, action.payload.snack)
-        return { snacks: updatedSnacks }
-    case 'CURRENT_SNACK':
-        return {currentSnack: action.payload}
+        return { currentSnack: state.currentSnack, snacks: updatedSnacks }
+    case 'SET_SNACK':
+      return {snacks: state.snacks, currentSnack: action.payload}
     case 'DELETE_SNACK':
       let remainingSnacks = filterSnacks(state.snacks, action.payload)
-        return {snacks: remainingSnacks}
+        return {snacks: remainingSnacks, currentSnack: ''}
   default:
         return state
   }
