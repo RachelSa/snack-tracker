@@ -24,7 +24,7 @@ class Snack extends React.Component {
 
   componentWillUpdate(nextProps) {
     let snackName = nextProps.match.params.snackName
-    if (snackName !== this.snack.name || nextProps.snacks !== this.props.snacks){
+    if (snackName !== this.props.currentSnack.name || nextProps.snacks !== this.props.snacks){
       this.setState({selected: 'view'})
       let snack = nextProps.snacks.find(snack => snack.name === snackName)
       this.props.setSnack(snack)
@@ -44,28 +44,27 @@ class Snack extends React.Component {
 
 
 render(){
-  debugger
-  if (this.snack === null ){
-    return <div></div>
+  if (this.props.currentSnack === '' ){
+    return <div>select a snack</div>
   }
   else if (this.state.selected === 'view'){
     return (
-      <SnackView snack={this.snack} handleChange={this.handleChange}/>
+      <SnackView handleChange={this.handleChange}/>
     )
   }
   else if (this.state.selected === 'delete'){
     return (
-      <SnackDelete snack={this.snack} handleChange={this.handleChange} handleDelete={this.handleDelete} />
+      <SnackDelete snack={this.props.currentSnack} handleChange={this.handleChange} handleDelete={this.handleDelete} />
     )
   }
 
   else {
     return (
       <Segment>
-        <Header as='h2'>{this.snack.name}</Header>
+        <Header as='h2'>{this.props.currentSnack.name}</Header>
         <SelectViewButtons handleChange={this.handleChange}/>
          <Divider />
-        <SnackForm snack={this.snack}/>
+        <SnackForm />
       </Segment>
       )
     }

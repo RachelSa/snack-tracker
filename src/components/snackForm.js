@@ -24,8 +24,8 @@ class SnackForm extends React.Component {
   }
 
   componentWillMount(){
-    if (this.props.snack){
-      let snack = this.props.snack
+    if (this.props.match.path !== "/snacks/new"){
+      let snack = this.props.currentSnack
       this.setState({
         snack: {
         name: snack.name,
@@ -59,14 +59,16 @@ class SnackForm extends React.Component {
   }
 
   handleSubmit = (event) => {
-
     event.preventDefault()
     if (this.state.edit){
       this.props.editSnack({snack: this.state.snack})
     }
     else {
       this.props.addSnack({snack: this.state.snack})
+      this.props.history.push(`/snacks/${this.state.snack.name}`)
     }
+
+
   }
 
   render(){
@@ -119,6 +121,10 @@ class SnackForm extends React.Component {
     )
   }
 }
-//rating edit is broken, does not display accurate rating
+const mapStateToProps = (state) => {
+  return {
+    currentSnack: state.snackReducer.currentSnack
+  }
+}
 
-export default withRouter(connect(null, {addSnack, editSnack})(SnackForm))
+export default withRouter(connect(mapStateToProps, {addSnack, editSnack})(SnackForm))
