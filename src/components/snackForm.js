@@ -67,8 +67,6 @@ class SnackForm extends React.Component {
       this.props.addSnack({snack: this.state.snack})
       this.props.history.push(`/snacks/${this.state.snack.name}`)
     }
-
-
   }
 
   render(){
