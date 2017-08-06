@@ -17,8 +17,7 @@ class SnackDirectory extends React.Component {
       </div>
     )
   }
-
-
+  
   render(){
     return (
       <Grid columns={2}>

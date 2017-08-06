@@ -1,12 +1,12 @@
 import React from 'react'
+import { withRouter } from 'react-router'
+import { connect } from 'react-redux'
+import { Segment, Divider, Header } from 'semantic-ui-react'
 import SnackForm from './snackForm'
 import SnackDelete from './snackDelete'
 import SnackView from './snackView'
 import SelectViewButtons from './detailView/selectViewButtons'
-import { Segment, Divider, Header, Button } from 'semantic-ui-react'
-import { connect } from 'react-redux'
 import { deleteSnack, setSnack } from '../actions'
-import { withRouter } from 'react-router'
 
 class Snack extends React.Component {
   constructor(props){
@@ -71,13 +71,11 @@ render(){
   }
 }
 
-
 const mapStateToProps = (state) => {
   return {
     snacks: state.snackReducer.snacks,
     currentSnack: state.snackReducer.currentSnack
   }
 }
-
 
 export default withRouter(connect(mapStateToProps, { deleteSnack, setSnack })(Snack))
